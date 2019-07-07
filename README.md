@@ -4,7 +4,7 @@
   - 为了便于扩展，抽象了限流队列的interface（RateLimitQueue），并且实现了简单的限流漏斗类（LeakyBucketQueue）
 #### 服务器
   - 配置文件为server/conf.ini，各字段含义配置文件中有说明
-#### 客户端（配置3万链接）
+#### 客户端
   - 配置文件为client/conf.ini,各字段含义配置文件中有说明
 
 
@@ -22,7 +22,7 @@
 #### 测试启动
 - 服务器启动：
     - `go run server_main.go`
-- 客户端启动
+- 客户端启动（配置3万链接）
     - `go run client_main.go`
 
 #### 测试结果
