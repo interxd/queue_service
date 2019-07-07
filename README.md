@@ -14,7 +14,13 @@
   
 ### 压测
 #### 环境
-- 4核 i3-4160 CPU @ 3.60GHz
-- 8G内存
-- 千兆网卡
-- go1.3.3
+- 系统：MacOs-10.14 
+- CPU: 4核 Intel(R) Core(TM) i7-4870HQ CPU @ 2.50GHz
+- 内存: 16G
+- go版本： 1.12.6
+
+#### 测试启动
+- 服务器启动：
+    - `go run server_main.go`
+- 客户端启动
+    - `go run client_main.go`
