@@ -108,7 +108,7 @@ func (s *Server) AssignToken() {
 
 
 func (s *Server) broadcastQueuePosition() {
-    fmt.Println("broadcastQueuePosition#####################: ", time.Now().Unix())
+    fmt.Println("broadcastQueuePosition#####################: ", time.Now().Unix(), s.clients.Count())
     
     s.clients.IterCb(func(key string, val interface{}) {
         cs := val.(*ClientService)

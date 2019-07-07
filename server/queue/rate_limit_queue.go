@@ -38,7 +38,7 @@ type RateLimitQueue interface {
 }
 
 func (q *LeakyBucketQueue) Start() bool {
-    go q.Dispatch()
+    go q.dispatch()
     return true
 }
 
@@ -53,10 +53,10 @@ func (q *LeakyBucketQueue) GetRelativePos(idx int64) int64 {
     return idx - q.headPos
 }
 
-func (q *LeakyBucketQueue) Dispatch() {
+func (q *LeakyBucketQueue) dispatch() {
     for {
         //logger.Debug("call dispatch queue");
-        //fmt.Println("Dispatch!!!: ", time.Now().Unix())
+        //fmt.Println("dispatch!!!: ", time.Now().Unix())
         startTime := time.Now().Unix()
         consumeTime := int64(0)
         cnt := 0
@@ -68,21 +68,21 @@ func (q *LeakyBucketQueue) Dispatch() {
                 q.dequeueChan <- uid
                 q.headPos++
                 cnt++
-                //fmt.Println("Dispatch!!!: select", time.Now().Unix(), uid, cnt)
+                //fmt.Println("dispatch!!!: select", time.Now().Unix(), uid, cnt)
             default:
-                //fmt.Println("Dispatch!!!: sleep_1", time.Now().Unix())
+                //fmt.Println("dispatch!!!: sleep_1", time.Now().Unix())
                 time.Sleep(1 * time.Second)
             }
             consumeTime = time.Now().Unix() - startTime
             if (consumeTime > int64(q.tickInterval) || cnt >= q.rate) {
-                //fmt.Println("Dispatch!!!: break", time.Now().Unix(), consumeTime, cnt)
+                //fmt.Println("dispatch!!!: break", time.Now().Unix(), consumeTime, cnt)
                 break
             }
         }
         
         //sleep
         if (consumeTime < int64(q.tickInterval)) {
-            //fmt.Println("Dispatch!!!: sleep_2", time.Now().Unix(), q.tickInterval,  consumeTime, int64(q.tickInterval) - consumeTime)
+            //fmt.Println("dispatch!!!: sleep_2", time.Now().Unix(), q.tickInterval,  consumeTime, int64(q.tickInterval) - consumeTime)
             time.Sleep(time.Duration(int64(q.tickInterval) - consumeTime) * time.Second) 
         }
     }
